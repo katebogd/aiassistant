@@ -50,6 +50,10 @@ def index():
 def sort_index():
     if request.method == "POST":
         #TODO
+        items = db.execute(
+            "SELECT * FROM items WHERE type = project"
+        )
+        return render_template("projects.html", items=items)
     else:
         items = db.execute(
             "SELECT * FROM items WHERE type = unknown"
@@ -58,7 +62,7 @@ def sort_index():
 
 
 # Display all projects with items
-@app.route("/projects", methods=["GET", "POST"])
+@app.route("/projects", methods=["GET"])
 def projects():
     items = db.execute(
         "SELECT * FROM items WHERE type = project"
@@ -67,7 +71,7 @@ def projects():
 
 
 # Display all later actions
-@app.route("/later", methods=["GET", "POST"])
+@app.route("/later", methods=["GET"])
 def later():
     items = db.execute(
         "SELECT * FROM items WHERE type = later"
@@ -76,7 +80,7 @@ def later():
 
 
 # Display all reference items
-@app.route("/reference", methods=["GET", "POST"])
+@app.route("/reference", methods=["GET"])
 def reference():
     items = db.execute(
         "SELECT * FROM items WHERE type = reference"
